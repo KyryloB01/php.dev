@@ -1,10 +1,15 @@
 <?php
 
+class AboutController
+{
+    private Response $response;
 
-$title = "About page";
-$breadcrumbs = [
-    'title' => "About page",
-    'link' => "/about",
-];
+    public function index(): void
+    {
+        $title = "About page";
+        $content = render('about', compact('title'));
 
-echo render('about', compact('title', 'breadcrumbs'));
+        $this->response = new Response($content);
+        $this->response->send();
+    }
+}

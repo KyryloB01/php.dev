@@ -1,10 +1,15 @@
 <?php
 
+class ErrorController
+{
+    private Response $response;
 
-$title = "404 Not Found";
-$breadcrumbs = [
-    'title' => "Error",
-    'link' => "/404",
-];
+    public function index(): void
+    {
+        $title = "404 Not Found";
+        $content = render('error', compact('title'));
 
-echo render('error', compact('title', 'breadcrumbs'));
+        $this->response = new Response($content, 404);
+        $this->response->send();
+    }
+}

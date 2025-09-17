@@ -1,10 +1,15 @@
 <?php
 
+class ContactController
+{
+    private Response $response;
 
-$title = "Contact page";
-$breadcrumbs = [
-    'title' => "Contact page",
-    'link' => "/contact",
-];
+    public function index(): void
+    {
+        $title = "Contact page";
+        $content = render('contact', compact('title'));
 
-echo render('contact', compact('title', 'breadcrumbs'));
+        $this->response = new Response($content);
+        $this->response->send();
+    }
+}
