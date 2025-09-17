@@ -3,21 +3,13 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Response;
+use Core\Http\BaseController;
 
-class ErrorController
+class ErrorController extends BaseController
 {
-    public function index()
+    public function index(): void
     {
         $title = "Error page";
-        $content = render('error', compact('title'));
-
-        $this->response = new Response($content);
-        $this->render($content);
-    }
-
-    private function render(string $content): void
-    {
-        echo $content;
+        echo $this->view()->render('error', compact('title'));
     }
 }

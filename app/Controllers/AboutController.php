@@ -3,21 +3,13 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Response;
+use Core\Http\BaseController;
 
-class AboutController
+class AboutController extends BaseController
 {
-    public function index()
+    public function index(): void
     {
         $title = "About page";
-        $content = render('about', compact('title'));
-
-        $this->response = new Response($content);
-        $this->render($content);
-    }
-
-    private function render(string $content): void
-    {
-        echo $content;
+        echo $this->view()->render('about', compact('title'));
     }
 }
