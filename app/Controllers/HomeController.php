@@ -1,10 +1,23 @@
 <?php
+declare(strict_types=1);
 
+namespace Controllers;
 
-$title = "Home page";
-$breadcrumbs = [
-    'title' => "Home page",
-    'link' => "/",
-];
+use Response;
 
-echo render('index', compact('title', 'breadcrumbs'));
+class HomeController
+{
+    public function index()
+    {
+        $title = "Home page";
+        $content = render('home', compact('title'));
+
+        $this->response = new Response($content);
+        $this->render($content);
+    }
+
+    private function render(string $content): void
+    {
+        echo $content;
+    }
+}

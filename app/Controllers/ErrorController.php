@@ -1,15 +1,23 @@
 <?php
+declare(strict_types=1);
+
+namespace Controllers;
+
+use Response;
 
 class ErrorController
 {
-    private Response $response;
-
-    public function index(): void
+    public function index()
     {
-        $title = "404 Not Found";
+        $title = "Error page";
         $content = render('error', compact('title'));
 
-        $this->response = new Response($content, 404);
-        $this->response->send();
+        $this->response = new Response($content);
+        $this->render($content);
+    }
+
+    private function render(string $content): void
+    {
+        echo $content;
     }
 }
