@@ -3,6 +3,7 @@
 use Controllers\CategoryController;
 use Controllers\TagController;
 use Controllers\BadgeController;
+use Controllers\ProductController;
 
 return [
 
@@ -26,4 +27,11 @@ return [
     '/badges/edit' => [BadgeController::class, 'edit'],
     '/badges/update' => [BadgeController::class, 'update'],
     '/badges/destroy' => [BadgeController::class, 'destroy'],
+
+    '/products' => [ProductController::class, 'index'],
+    '/products/create' => [ProductController::class, 'create'],
+    '/products/store' => [ProductController::class, 'store'],
+    '/products/edit' => [ProductController::class, 'edit'],
+    '/products/update' => [ProductController::class, 'update'],
+    '/products/destroy' => [ProductController::class, 'destroy'],
 ];
