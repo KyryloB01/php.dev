@@ -3,34 +3,56 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Models\Category; 
 use Core\Http\BaseController;
-use Models\Category;
 
 class CategoryController extends BaseController
 {
+   
     public function index(): void
     {
-        $model = new Category();
-        $categories = $model->get(); // SELECT * FROM categories
-        echo $this->view()->render('categories/index', compact('categories'));
+        $title = "Categories";
+        $categories = Category::all(); 
+        echo $this->view()->render('categories/index', compact('title', 'categories'));
     }
 
     public function create(): void
     {
-        echo $this->view()->render('categories/create');
+        $title = "Create Category";
+        echo $this->view()->render('categories/create', compact('title'));
     }
 
     public function store(): void
     {
-        $name = $_POST['name'] ?? '';
-        $image = $_POST['image'] ?? '';
-
-        $model = new Category();
-        $model->insert([
-            'name' => $name,
-            'image' => $image
+        Category::create([
+            'name' => $_POST['name'],
+            'image' => $_POST['image']
         ]);
+        header("Location: /categories"); 
+        exit;
+    }
 
+    public function edit(int $id): void
+    {
+        $title = "Edit Category";
+        $category = Category::find($id);
+        echo $this->view()->render('categories/edit', compact('title', 'category'));
+    }
+
+    public function update(int $id): void
+    {
+        Category::update($id, [
+            'name' => $_POST['name'],
+            'image' => $_POST['image']
+        ]);
         header("Location: /categories");
+        exit;
+    }
+
+    public function destroy(int $id): void
+    {
+        Category::delete($id);
+        header("Location: /categories");
+        exit;
     }
 }

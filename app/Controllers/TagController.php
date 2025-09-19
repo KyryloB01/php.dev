@@ -3,34 +3,55 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\Http\BaseController;
 use Models\Tag;
+use Core\Http\BaseController;
 
 class TagController extends BaseController
 {
     public function index(): void
     {
-        $model = new Tag();
-        $tags = $model->get(); 
-        echo $this->view()->render('tags/index', compact('tags'));
+        $title = "Tags";
+        $tags = Tag::all();
+        echo $this->view()->render('tags/index', compact('title', 'tags'));
     }
 
     public function create(): void
     {
-        echo $this->view()->render('tags/create');
+        $title = "Create Tag";
+        echo $this->view()->render('tags/create', compact('title'));
     }
 
     public function store(): void
     {
-        $name = $_POST['name'] ?? '';
-        $slug = $_POST['slug'] ?? '';
-
-        $model = new Tag();
-        $model->insert([
-            'name' => $name,
-            'slug' => $slug
+        Tag::create([
+            'name' => $_POST['name'],
+            'slug' => $_POST['slug']
         ]);
-
         header("Location: /tags");
+        exit;
+    }
+
+    public function edit(int $id): void
+    {
+        $title = "Edit Tag";
+        $tag = Tag::find($id);
+        echo $this->view()->render('tags/edit', compact('title', 'tag'));
+    }
+
+    public function update(int $id): void
+    {
+        Tag::update($id, [
+            'name' => $_POST['name'],
+            'slug' => $_POST['slug']
+        ]);
+        header("Location: /tags");
+        exit;
+    }
+
+    public function destroy(int $id): void
+    {
+        Tag::delete($id);
+        header("Location: /tags");
+        exit;
     }
 }
